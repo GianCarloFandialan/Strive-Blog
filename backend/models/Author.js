@@ -11,12 +11,10 @@ const authorSchema = new Schema(
     // CAMPO 'SURNAME' DI TIPO STRING OBBLIGATORIO (REQUIRED)
     cognome: {
       type: String,
-      required: true,
     },
     // CAMPO 'EMAIL' DI TIPO STRING OBBLIGATORIO E UNICO (UNIQUE)
     email: {
       type: String,
-      required: true,
       unique: true,
     },
     // CAMPO 'DATA DI NASCITA' DI TIPO STRING OBBLIGATORIO
@@ -33,6 +31,10 @@ const authorSchema = new Schema(
     },
     //CAMPO PER L'ID GOOGLE DI TIPO STRINGA
     googleId: { 
+      type: String 
+    },
+    //CAMPO PER L'ID GOOGLE DI TIPO STRINGA
+    githubId: { 
       type: String 
     },
   },

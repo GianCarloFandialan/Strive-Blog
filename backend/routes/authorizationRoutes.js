@@ -59,7 +59,7 @@ router.get(
 router.get(
   "/google/callback",
   // PASSPORT TENTA DI AUTENTICARE L'UTENTE CON LE CREDENZIALI GOOGLE
-  passport.authenticate("google", { failureRedirect: "/login" }),
+  passport.authenticate("google", { failureRedirect: `/login` }),
   // SE L'AUTENTICAZIONE FALLISCE, L'UTENTE VIENE REINDIRIZZATO ALLA PAGINA DI LOGIN
 
   async (req, res) => {
@@ -77,9 +77,32 @@ router.get(
     } catch (error) {
       console.error("Errore nella generazione del token:", error);
       // REINDIRIZZIAMO L'UTENTE ALLA PAGINA DI LOGIN CON UN MESSAGGIO DI ERRORE
-      res.redirect("/login?error=auth_failed");
+      res.redirect(`/login?error=auth_failed`);
     }
   }
 );
+
+// ROTTE GITHUB
+router.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:email"] })
+);
+
+router.get(
+  "/github/callback",
+  passport.authenticate("github", { failureRedirect: "/login" }),
+  handleAuthCallback
+);
+
+// FUNZIONE HELPER PER GESTIRE IL CALLBACK DI AUTENTICAZIONE
+async function handleAuthCallback(req, res) {
+  try {
+    const token = await generateJWT({ id: req.user._id });
+    res.redirect(`http://localhost:5173/login?token=${token}`);
+  } catch (error) {
+    console.error("Errore nella generazione del token:", error);
+    res.redirect("/login?error=auth_failed");
+  }
+}
 
 export default router;

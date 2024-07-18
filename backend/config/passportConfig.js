@@ -1,5 +1,6 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as GitHubStrategy } from "passport-github2";
 import Author from "../models/Author.js";
 
 // CONFIGURO LA STRATEGIA DI AUTENTICAZIONE GOOGLE
@@ -9,7 +10,7 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       // L'URL A CUI GOOGLE REINDIZZERÀ DOPO L'AUTENTICAZIONE
-      callbackURL: "/auth/google/callback",
+      callbackURL: `/auth/google/callback`,
     },
 
     // QUESTA FUNZIONE VIENE CHIAMATA QUANDO L'AUTENTICAZIONE GOOGLE HA SUCCESSO
@@ -35,6 +36,60 @@ passport.use(
         done(null, author);
       } catch (error) {
         // SE SI VERIFICA UN ERRORE, LO PASSIAMO A PASSPORT
+        done(error, null);
+      }
+    }
+  )
+);
+
+// CONFIGURO LA STRATEGIA DI AUTENTICAZIONE GITHUB
+passport.use(
+  new GitHubStrategy(
+    {
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      callbackURL: "/auth/github/callback",
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        let author = await Author.findOne({ githubId: profile.id });
+
+        if (!author) {
+          const [nome, ...cognomeParts] = (
+            profile.displayName ||
+            profile.username ||
+            ""
+          ).split(" ");
+          const cognome = cognomeParts.join(" ");
+
+          // GESTIONE DELL'EMAIL
+          let email;
+          if (profile.emails && profile.emails.length > 0) {
+            // CERCHIAMO PRIMA L'EMAIL PRIMARIA O VERIFICATA
+            email = profile.emails.find((e) => e.primary || e.verified)?.value;
+            // SE NON TROVIAMO UN'EMAIL PRIMARIA O VERIFICATA, PRENDIAMO LA PRIMA DISPONIBILE
+            if (!email) email = profile.emails[0].value;
+          }
+
+          // SE ANCORA NON ABBIAMO UN'EMAIL, USIAMO UN FALLBACK
+          if (!email) {
+            email = `${profile.id}@github.com`;
+            console.warn(
+              `Email non disponibile per l'utente GitHub ${profile.id}. Usando email di fallback.`
+            );
+          }
+
+          author = new Author({
+            githubId: profile.id,
+            nome: nome || "GitHub User",
+            cognome: cognome,
+            email: email,
+          });
+          await author.save();
+        }
+
+        done(null, author);
+      } catch (error) {
         done(error, null);
       }
     }
