@@ -6,6 +6,8 @@ import passport from "../config/passportConfig.js";
 
 const router = express.Router();
 
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+
 // POST CHE RESTITUISCE IL TOKEN DI ACCESSO
 router.post("/login", async (req, res) => {
   try {
@@ -59,7 +61,7 @@ router.get(
 router.get(
   "/google/callback",
   // PASSPORT TENTA DI AUTENTICARE L'UTENTE CON LE CREDENZIALI GOOGLE
-  passport.authenticate("google", { failureRedirect: `/login` }),
+  passport.authenticate("google", { failureRedirect: `${FRONTEND_URL}/login` }),
   // SE L'AUTENTICAZIONE FALLISCE, L'UTENTE VIENE REINDIRIZZATO ALLA PAGINA DI LOGIN
 
   async (req, res) => {
@@ -90,7 +92,7 @@ router.get(
 
 router.get(
   "/github/callback",
-  passport.authenticate("github", { failureRedirect: "/login" }),
+  passport.authenticate("github", { failureRedirect: `${FRONTEND_URL}/login` }),
   handleAuthCallback
 );
 
@@ -98,10 +100,10 @@ router.get(
 async function handleAuthCallback(req, res) {
   try {
     const token = await generateJWT({ id: req.user._id });
-    res.redirect(`http://localhost:5173/login?token=${token}`);
+    res.redirect(`${FRONTEND_URL}/login?token=${token}`);
   } catch (error) {
     console.error("Errore nella generazione del token:", error);
-    res.redirect("/login?error=auth_failed");
+    res.redirect(`${FRONTEND_URL}/login?error=auth_failed`);
   }
 }
 
