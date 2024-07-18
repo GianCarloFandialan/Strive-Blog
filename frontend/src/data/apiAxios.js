@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = `http://localhost:5001/` || "https://nome_della_tua_app.onrender.com/api"
+const API_URL = `http://localhost:5001/` || "https://strive-blog-seven.vercel.app/"
 
 const api = axios.create({ baseURL: API_URL});
 
