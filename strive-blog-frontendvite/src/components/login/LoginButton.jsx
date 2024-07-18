@@ -37,7 +37,7 @@ function Login() {
   //USO IL CONTEXT
   const { currentPage, setCurrentPage } = useContext(CurrentPageContext)
 
-  //CREO UNA FUNZIONE PER GESTIRE IL SUBMIT DEL FORM
+  //CREO UNA FUNZIONE PER GESTIRE IL SUBMIT DEL FORM CHE UTILIZA LA FUNZIONE DI LOGIN CREATA SU AXIOS
   const handleSubmit = async (e) => {
 
     e.preventDefault(); 
@@ -61,7 +61,7 @@ function Login() {
   // HOOK PER ACCEDERE AI PARAMETRI DELL'URL CORRENTE
   const location = useLocation();
 
-  // USE EFFECT
+  // USE EFFECT CHE VERIFICA IL TOKEN
   useEffect(() => {
 
     const params = new URLSearchParams(location.search);

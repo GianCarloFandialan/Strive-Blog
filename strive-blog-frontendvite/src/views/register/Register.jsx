@@ -15,7 +15,7 @@ function Register() {
     password: "",
   })
 
-  //HOOK PER LA NAIGAZIONE
+  //HOOK PER LA NAVIGAZIONE
   const navigate = useNavigate();
 
   //CREO UNO STATO PER POTERMI GESTIRE IL FILE CARICATO
@@ -49,7 +49,7 @@ function Register() {
   //CREO UNO STATO PER POTERMI GESTIRE L'ALERT NEL CASO LE PASSWORD INSERITE NON COMBACIANO
   const [ passwordError, setPasswordError] = useState(false)
 
-  //CREO UNA FUNZIONE PER GESTIRE IL SUBMIT DEL FORM
+  //CREO UNA FUNZIONE PER GESTIRE IL SUBMIT DEL FORM CHE MI ESEGUE LA FUNZIONE CREATA CON AXIOS
   const handleSubmit = async (e) => {
     e.preventDefault();
 

@@ -16,7 +16,7 @@ function ModifyPostImageButton( { postId } ) {
   //USO IL CONTEXT
   const { currentPage, setCurrentPage } = useContext(CurrentPageContext)
 
-  //HOOK PER LA NAIGAZIONE
+  //HOOK PER LA NAVIGAZIONE
   const navigate = useNavigate();
 
   //CREO UNO STATO PER POTERMI GESTIRE IL FILE CARICATO
@@ -35,7 +35,7 @@ function ModifyPostImageButton( { postId } ) {
     }
   };
 
-  //CREO UNA FUNZIONE PER GESTIRE IL SUBMIT DEL FORM
+  //CREO UNA FUNZIONE PER GESTIRE IL SUBMIT DEL FORM ESEGUENDO LA FUNZIONE CREATA SU AXIOS PER AGGIORNARE L'IMMAGINE COVER
   const handleSubmit = async (e) => {
     e.preventDefault();
 

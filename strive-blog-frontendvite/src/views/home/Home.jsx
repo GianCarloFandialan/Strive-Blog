@@ -47,18 +47,19 @@ const Home = () => {
     }
   }
 
-  //HOOK PER LA NAIGAZIONE
+  //HOOK PER LA NAVIGAZIONE
   const navigate = useNavigate();
 
   return (
     <Container fluid="sm">
+      {/* SE SI STA EFETTUANDO UNA RICERCA FACCIO USCIRE LA SCRITTA PER LA RICERCA ALTRIMENTO METTO IL TITOLO */}
       {isSearching ?
       <span className="blog-main-title my-2 text-black d-block">Risultati ricerca:</span>
       :
       <h1 className="blog-main-title my-2">Benvenuto sullo Strive Blog!</h1>
       }
 
-      {/* FORM PER GESTIRMI IL LIMITE DI POST DELLA PAGINA */}
+      {/*SE SI STA EFFETTUANDO UNA RICERCA MOSTRO QUANTI RISULTATI HO OTENUTO DA ESSA ALTIMENTO ESCE IL FORM PER GESTIRMI IL LIMITE DI POST DELLA PAGINA */}
       {isSearching ?
         <span className="fs-4 mb-5">Totali: {posts.length}</span>
         :
@@ -74,7 +75,7 @@ const Home = () => {
         </Form.Select>
       }
 
-      {/* BOTTONE CHE MI PORTA ALLA PAGINA PER CREARE UN NUOVO ARTICOLO */}
+      {/* BOTTONE CHE MI PORTA ALLA PAGINA PER CREARE UN NUOVO ARTICOLO CHE APPARARE SOLO SE SONO NELLA HOMEPAGE*/}
       {!isSearching && 
         <Container fluid className="mb-3">
           <Button as={Link} to="/new" className="blog-navbar-add-button bg-dark w-100 d-flex align-items-center justify-content-center" size="lg">
@@ -103,7 +104,7 @@ const Home = () => {
         <BlogList isLoading={isLoading}/>
       }
 
-      {/*  */}
+      {/* COMPONENTE CHE MI GESTIE L'IMPAGINAZIONE CHE COMPARE SOLO QUANDO SONO NELLA HOMEPAGE E NON NELLA PAGINA DI RICERCA */}
       {searchText.length < 1 && 
         <HomeLayoutHandler totalPages={totalPages} />
       }

@@ -15,6 +15,7 @@ function AddNewComment( { id, getAllComments } ) {
       email: "",
     })
   };
+
   const handleShow = () => {
     setShow(true)
     setNewComment({...newComment, email : userLogged.email, name : userLogged.nome + " " + userLogged.cognome})
@@ -30,6 +31,7 @@ function AddNewComment( { id, getAllComments } ) {
   //USO IL CONTEXT
   const { userLogged, setUserLogged } = useContext(LoggedUserDataContext)
 
+  //AL SUBMIT DEL FORM RICHIAMO LA FUNZIONE CREATA SU AXIOS PER CREARE UN COMMENTO
   const handleSubmit = async (e) => {
     e.preventDefault();
 

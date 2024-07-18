@@ -12,7 +12,7 @@ function SearchBar() {
   const { isLoading, setIsLoading } = useContext(HomeLoadingContext)
   const { isSearching, setIsSearching } = useContext(IsSearchingContext)
 
-  //CREO LA FUNZIONE PER POTERMI FILTRARE I POST DAL TITOLO
+  //CREO LA FUNZIONE PER POTERMI FILTRARE I POST DAL TITOLO TRAMITE LA FUNZIONE CREATA CON AXIOS
   const filterPosts = async (title) => {
     try {
       setIsLoading(true)
@@ -27,9 +27,10 @@ function SearchBar() {
     }
   }
   
-  //HOOK PER LA NAIGAZIONE
+  //HOOK PER LA NAVIGAZIONE
   const navigate = useNavigate();
 
+  //AL SUBMIT DELLA BARRA DI RICERCA RICHIAMO LA FUNZIONE QUI SOPRA
   function handleSubmit(e) {
     e.preventDefault();
     filterPosts(searchText)

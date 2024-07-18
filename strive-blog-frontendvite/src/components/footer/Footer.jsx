@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 
-const Footer = (props) => {
+const Footer = () => {
   return (
     <footer
       style={{

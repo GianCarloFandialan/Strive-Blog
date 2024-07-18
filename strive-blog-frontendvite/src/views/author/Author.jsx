@@ -21,13 +21,12 @@ function Author() {
   //OTTENGO L'ID DELL'AUTORE
   const { id } = params;
 
-  //FUNZIONE PER OTTENERE I DATI DEL SINGOLO AUTORE
+  //FUNZIONE PER OTTENERE I DATI DEL SINGOLO AUTORE GRAZIE ALLA FUNZIONE CREATA CON AXIOS
   const getAuthor = async (id) => {
     try {
       setIsLoading(true)
       const response = await getSingleAuthor(id);
       setAuthor(response.data)
-      console.log(response.data);
       setIsLoading(false)
     } catch (error) {
       console.error("Errore nella fetch dei dati del singolo autore:", error)
@@ -35,14 +34,10 @@ function Author() {
     }
   }
 
-  //USO L'EFFECT AL CARICAMENTO DELLA PAGINA
+  //AL CARICAMENTO DEL COMPONENTE ESEGUO LA FUNZIONE QUI SOPRA OPPURE AL CAMBIAMENTO DEL PARAMETRO
   useEffect(() => {
     getAuthor(id)
-
   },[id])
-
-  //USO IL CONTEXT
-  const { isLoggedIn, setIsLoggedIn } = useContext(LoggedInContext)
 
   // CREO GLI STATI PER GESTIRMI LA PAGINAZIONE
   const [totalPages, setTotalPages] = useState(1); 
@@ -50,26 +45,22 @@ function Author() {
   const [currentPage, setCurrentPage] = useState(1); 
   const [totalPosts, setTotalPosts] = useState(1)
 
-  //FUNZIONE PER GESSTIRE TOTALPAGES
+  //FUNZIONE PER GESSTIRE TOTALPAGES DELLA PAGINA AUTORE
   const handleTotalPages = (a) => {
     setTotalPages(a)
   }
 
-  //FUNZIONE PER GESSTIRE TOTALPAGES
-  const handleLimit = (a) => {
-    setLimit(a)
-  }
-
-  //FUNZIONE PER GESSTIRE TOTALPAGES
+  //FUNZIONE PER GESSTIRE LA PAGINA CORRENTE DEI POST DELLA PAGINA AUTORE
   const handleCurrentPage = (a) => {
     setCurrentPage(a)
   }
   
-  //FUNZIONE PER GESSTIRE TOTALPAGES
+  //FUNZIONE PER GESSTIRE IL TOTALE DEI POST DELLA PAGINA DELL'AUTORE
   const handleTotalPosts = (a) => {
     setTotalPosts(a)
   }
 
+  //SE IL CONTENUTO DELLA PAGINA STA CARICANDO ESCE LO SPINNER ALTRIMENTO CARICO LA PAGINA
   if (isLoading) {
     return (
       <Container fluid className="d-flex justify-content-center align-items-center" style={{minHeight: "50vh"}}>
@@ -83,6 +74,7 @@ function Author() {
         <Container>
           <Container fluid className="d-flex justify-content-center py-5 align-items-center fw-bold fs-1">
             {author.nome + ' ' } 
+            {/* SE L'UTENTE HA L'AVATAR, SI CARICA L'AVATAR ALTRIMENTI ESCE UN'ICONA */}
             {author.avatar ? 
                 <Image className="author-avatar mx-2" src={author.avatar} />              
             :             
@@ -99,6 +91,7 @@ function Author() {
               <span>Totali: {totalPosts}</span>
             </Container>
   
+            {/* FORM PER GESTIRE QUANTI POST VENGONO CARICATI ALLA VOLTA */}
             <Form.Select 
               size="lg" 
               className="w-25 mb-3"
@@ -108,6 +101,8 @@ function Author() {
               <option value={3}>3 per pagina</option>
               <option value={6}>6 per pagina</option>
             </Form.Select>
+
+            {/* COMPONENTE CHE CONTIENE I POST A CUI PASSO VARIE PROPS */}
             <AuthorPosts 
               authorID={author._id} 
               handleTotalPages={handleTotalPages}
@@ -116,6 +111,8 @@ function Author() {
               limit={limit}
               currentPage={currentPage}          
             />
+
+            {/* CONTAINER PER GESTIRE L'IMPAGINAZIONE DEI POST DELLA PAGINA */}
             <Container fluid className="d-flex justify-content-center align-items-center">
               <Button 
                 variant="outline-dark"

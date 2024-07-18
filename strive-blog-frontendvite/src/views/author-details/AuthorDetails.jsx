@@ -11,12 +11,13 @@ function AuthorDetails() {
   const { isLoggedIn, setIsLoggedIn } = useContext(LoggedInContext)
   const { userLogged, setUserLogged } = useContext(LoggedUserDataContext)
 
-  //HOOK PER LA NAIGAZIONE
+  //HOOK PER LA NAVIGAZIONE
   const navigate = useNavigate();
 
   //CREO UNO STATO PER POTERMI GESTIRE I DATI DELL'UTENTE CHE HA FATTO L'ACCESSO PER RENDERE LA PAGINA PIÙ DINAMICA
   const [user, setUser] = useState(userLogged)
 
+  //USE EFFECT CHE MI CAMBIA I DATI DELL'UTENTE QUANDO I DATI DELL'UTENTE LOGGATO CAMBIA
   useEffect(() => {
     if (!isLoggedIn) {
       navigate('/login')
@@ -24,12 +25,13 @@ function AuthorDetails() {
     setUser(userLogged)
   }, [userLogged])
 
-  // CREOUNO STATO PER PER POTERMI GESITRE l'APPARIRE O NO DEL BOTTONE DI MODIIFICA DELL'AVATAR ALL'HOVER SULL'IMMAGINE
+  // CREO UNO STATO PER PER POTERMI GESITRE l'APPARIRE O NO DEL BOTTONE DI MODIIFICA DELL'AVATAR ALL'HOVER SULL'IMMAGINE
   const [ isModifyAvatar,  setIsModifyAvatar] = useState(false)
 
   // CREO UNO STATO PER POTERMI GESTIRE LA PAGINA MENTRE EFFETTUO LE MODIFICHE DELL'UTENTE
   const [isLoading, setIsloading] = useState(false)
 
+  //FUNZIONE PER GESTIRE GLI SPINNER
   function handleLoading(a) {
     setIsloading(a)
   }
@@ -37,6 +39,7 @@ function AuthorDetails() {
   return (
     <div className="blog-details-root">
       <Container>
+        {/* QUANDO ESEGUO UNA MDOFICA DELL'AVATAR, MENTRE LA CHIAMTA TERMINA FUORI ESCE UNO SPINNER */}
         {!isLoading ?
           <Container fluid className="d-flex justify-content-center py-5 align-items-center fw-bold fs-1">
           {user.nome + ' ' } 
@@ -73,6 +76,7 @@ function AuthorDetails() {
           </Container>
         }
 
+        {/* MENTRE MODIFICO I DATI DELL'UTENTE, MENTRE LA CHIAMATA NON È ANCORA TERMINATA CARICO UNO SPINNER */}
         {!isLoading ?          
           <Container>
             <AuthorDetailsForm handleLoading={handleLoading}/>

@@ -5,6 +5,7 @@ import { getAuthors } from "../../../data/apiAxios";
 import { useNavigate } from "react-router-dom";
 
 const BlogAuthor = props => {
+  //OTTENGO L'EMAIL DELL'AUTORE DA PROP
   const { author } = props;
 
   //HOOK PER LA NAIGAZIONE
@@ -16,7 +17,7 @@ const BlogAuthor = props => {
   //CREO UNO STATO PER POTERMI GESTIRE L'ID DELL'AUTORE
   const [ authorID, setAuthorID]= useState()
 
-  //CREO LA FUNZIONE PER OTTENERE I DATI DEL SINGOLO AUTORE
+  //CREO LA FUNZIONE PER OTTENERE I DATI DEL SINGOLO AUTORE(AVATAR E ID) PARTENDO DALLA EMAIL E RICHIAMANDO LA FUNZIONE CREATA SU AXIOS
   const getAuthor = async () => {
     try {
       const response = await getAuthors();
@@ -27,10 +28,12 @@ const BlogAuthor = props => {
     }
   }
 
+  //AL CARICAMENTO DEL COMPONENTE RICHIAMO LA FUNZIONE QUI SOPRA
   useEffect(() => {
     getAuthor()
   },[])
 
+  //AL CLICK SULL'AUTORE REINDERIZZO ALLA PAGINA DELL'AUTORE METTENDO COME PARAMETRO L'ID DELL'AUTORE
   function handleAuthorClick() {
     navigate(`/author/${authorID}`)
   }
@@ -38,6 +41,7 @@ const BlogAuthor = props => {
   return (
     <Row className="flex-nowrap">
       <Col xs={"auto"} className="pe-0">
+        {/* SE L'AUTORE NON HA UN AVATAR, GLI METTO UN'ICONA */}
         {avatar ? 
           <Image className="blog-author" src={avatar} roundedCircle />
           :

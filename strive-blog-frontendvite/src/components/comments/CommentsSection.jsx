@@ -26,7 +26,7 @@ function CommentsSection({postId}) {
     setIsCommentsLoading(false)
   };
 
-  //CREO UNA FUNZIONE PER OTTENERE I COMMENTI
+  //CREO UNA FUNZIONE PER OTTENERE I COMMENTI CON LA FUNZIONE CREATA SU AXIOS
   const getAllComments = async (id) => {
     try {
       setIsCommentsLoading(true)
@@ -39,7 +39,7 @@ function CommentsSection({postId}) {
     }
   }
 
-  //USE EFFECT CHE FUNZIONA AL VARIRE DELLA PAGINE DEI COMMENTI
+  //AL CARICAMENTO DEL COMPONENTE OTTENGO I COMMENTI 
   useEffect(() => {
     getAllComments(id) 
   },[])
@@ -67,6 +67,7 @@ function CommentsSection({postId}) {
             <h2 className="d-flex ">
               Comments       
             </h2>
+            {/* MENTRE STA CARICANDO I COMMENTI ESCE LA SCRITTA LOADING POI QUANDO HA FINITO ESCE IL NUMERO DI COMMENTI */}
             {isCommentsLoading ? <span>Loading..</span> : <span>Tot: {comments.length}</span>}
             
           </div>
@@ -88,6 +89,7 @@ function CommentsSection({postId}) {
             handleSpinnerFalse={handleSpinnerFalse} 
           />
 
+          {/* CONTAINER CONTENTE I BOTTONI PER L'IMPAGINAZIONE DELLA PAGINA */}
           <Container fluid className="d-flex justify-content-center align-items-center my-3">
             <Button 
               variant="outline-dark"

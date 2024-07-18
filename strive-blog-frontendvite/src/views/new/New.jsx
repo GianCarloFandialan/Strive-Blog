@@ -34,7 +34,6 @@ const NewBlogPost = () => {
     } else {
       setPost({ ...post, [name]: value })
     }
-
   }
 
   //HOOK PER LA NAIGAZIONE
@@ -61,7 +60,7 @@ const NewBlogPost = () => {
       }
   };
 
-  //CREO UNA FUNZIONE PER GESTIRE IL SUBMIT DEL FORM
+  //CREO UNA FUNZIONE PER GESTIRE IL SUBMIT DEL FORM CON LA FUNZIONE CREATA SU AXIOS
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -91,6 +90,7 @@ const NewBlogPost = () => {
     }
   };
 
+  // AL CARICAMENTO DEL COMPONENTE MODIFICO LA CASELLA EMAIL CON L'EMAIL DELL'UTENTE CHE HA EFFETTUATO L'ACCESSO
   useEffect(() => {
     setPost({...post, author : userLogged.email})
   },[])

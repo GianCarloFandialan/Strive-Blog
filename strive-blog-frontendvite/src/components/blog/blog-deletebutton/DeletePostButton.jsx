@@ -22,14 +22,7 @@ function DeletePostButton( { id } ) {
   //HOOK PER LA NAIGAZIONE
   const navigate = useNavigate();
 
-  //CREO UNA FUNZIONE PER GESTIRE IL SUBMIT DEL FORM
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    deletePostHandler(id)
-
-  };
-
+  //CREO LA FUNZIONE PER CANCELLARE IL POST TRAMITE LA FUNZIONE SU AXIOS
   async function deletePostHandler(id) {
     try {
       await deletePost(id);
@@ -42,7 +35,13 @@ function DeletePostButton( { id } ) {
     }
   }
 
+  //CREO UNA FUNZIONE PER GESTIRE IL SUBMIT DEL FORM NEL MODALE PER CANELLARE IL POST
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    deletePostHandler(id)
+
+  };
 
   return (
     <>

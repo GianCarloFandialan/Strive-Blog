@@ -19,21 +19,20 @@ const NavBar = props => {
   const { searchText, setSearchText } = useContext(SearchTextContext)
   const { isSearching, setIsSearching } = useContext(IsSearchingContext)
 
-  //HOOK PER LA NAIGAZIONE
+  //HOOK PER LA NAVIGAZIONE
   const navigate = useNavigate();
 
-  //FUNZIONE PER OTTENERE I DATI DELL'UTENTE ATTUALMENTE AUTENTICATO
+  //FUNZIONE PER OTTENERE I DATI DELL'UTENTE ATTUALMENTE AUTENTICATO TRAMITE LA FUNZIONE CREATA CON AXIOS
   const fetchUser = async () => {
     try {
-      const userData = await getUserData();
-      console.log(userData);
+      const userData = await getUserData();;
       setUserLogged(userData)
     } catch (error) {
       console.error("Errore nel recupero dei dati utente:", error);
     }
   };  
 
-  //AL CARICAMENTO DEL COMPONENTE
+  //USE EFFECT CHE AVVIENE ALL'ACCESSO O LOGOUT DELL'UTENTE 
   useEffect(() => {
 
     const checkLoginStatus = () => {

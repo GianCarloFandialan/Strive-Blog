@@ -27,7 +27,7 @@ function ModifyComment( { postId, id, content, handleSpinnerTrue, handleSpinnerF
   const { comments, setComments } = useContext(CommentsContext)
   const { userLogged, setUserLogged } = useContext(LoggedUserDataContext)
 
-  //GESTISCO IL SUBMIT DEL FORM
+  //GESTISCO IL SUBMIT DEL FORM CHE FA L'UPDATE DEL COMMENTO TRAMITE LA FUNZIONE CREATA CON AXIOS
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {     
@@ -41,6 +41,7 @@ function ModifyComment( { postId, id, content, handleSpinnerTrue, handleSpinnerF
     }
   };
 
+  // AL CARICAMENTO DEL COMPONENTE INSERISCO I DATI DEL NOME E DELL'EMAIL DELL'UTENTE
   useEffect(() => {
     setModifiedContent({...modifiedContent, email : userLogged.email, name : userLogged.nome});
   }, [])

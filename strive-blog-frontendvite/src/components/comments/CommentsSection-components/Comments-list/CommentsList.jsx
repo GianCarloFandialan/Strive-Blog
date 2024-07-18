@@ -10,6 +10,7 @@ function CommentsList( { postId, handleSpinnerTrue, handleSpinnerFalse, isCommen
   const { comments, setComments } = useContext(CommentsContext)
   const { userLogged, setUserLogged } = useContext(LoggedUserDataContext)//USO QUESTO CONTEXT IN MODO TALE DA FAR MODIFICARE/ELIMANRE IL COMMENTO SOLO DALL'AUTORE DI ESSO
 
+  //SE I COMMENTI SI STANNO ANCORA CARICANDO ESCE LO SPINNER ALTRIMENTI ESCONO I COMMENTI
   if (isCommentsLoading) {
     return (
       <Container fluid className="d-flex justify-content-center align-items-center" style={{minHeight: "50vh"}}>
@@ -31,6 +32,7 @@ function CommentsList( { postId, handleSpinnerTrue, handleSpinnerFalse, isCommen
               </div>
               <div>
               
+              {/* I BOTTONI DI MODIFICA E CANCELLAZIONE ESCONO SOLO SE L'AUOTRE DEL COMMENTO È L'UTENTE */}
               {comment.email == userLogged.email && 
                 <ModifyComment 
                   postId={postId} 

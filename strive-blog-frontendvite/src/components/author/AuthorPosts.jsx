@@ -8,7 +8,7 @@ function AuthorPosts( { authorID, handleTotalPages, handleTotalPosts, handleCurr
   //CREO UNO STATO IN CUI GESTIRMI I POST DELLA PAGINA
   const [posts, setPosts] = useState([])
 
-  //CREO UNA FUNZIONE PER OTTENERE TUTTI I POST DI QUEL PRECISO AUTORE
+  //CREO UNA FUNZIONE PER OTTENERE TUTTI I POST DI QUEL PRECISO AUTORE TRAMITE IL SUO ID E LA FUNZIONE CREATA SU AXIOS
   const getAllComments = async (id, currentPage, limit) => {
     try {
       const response = await getAuthorPosts(id, currentPage, limit);
@@ -23,10 +23,12 @@ function AuthorPosts( { authorID, handleTotalPages, handleTotalPosts, handleCurr
     }
   }
 
+  // QUANDO CAMBIANO LA PAGINA CORRENTE OPPURE IL NUMERO DI POST PER PAGINA RIESEGUO LA FUNZIONE QUI SOPRA
   useEffect(() => {
     getAllComments(authorID, currentPage, limit)
   }, [currentPage, limit])
 
+  //CONDIZIONE PER CUI CARICO I POST SOLO NEL MOMENTO IN CUI HO ALMENO UN POST ALTRIMENTI MOSTRO CHE NON HO OTTENUTO RISULTATI
   if (posts.length > 0) {
     return (
       <Row>

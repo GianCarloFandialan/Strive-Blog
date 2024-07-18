@@ -15,6 +15,7 @@ function RemoveComment( { postId, id, handleSpinnerTrue, handleSpinnerFalse } ) 
   //USO IL CONTEXT
   const { comments, setComments } = useContext(CommentsContext)
 
+  //FUNZIONE PER CANCELLARE IL COMMENTO TRAMITE LA FUNZIONE CREATA SU AXIOS DOPO AVER PREMUTO IL BOTTONE PER CANCELLARE
   const handleDelete = async () => {
 
     try {

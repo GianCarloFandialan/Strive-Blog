@@ -8,6 +8,7 @@ const BlogItem = (props) => {
   return (
 
       <Card className="blog-card">
+        {/* AL CLICK DEL BODY VADO NELLA PAGINA DEL BLOG FORNENDOGLI IL PARAMETRO ID DEL BLOG ITEM */}
         <Link to={`/blog/${_id}`} className="blog-link">
           <Card.Img variant="top" src={cover} className="blog-cover" />
           <Card.Body>
@@ -15,6 +16,7 @@ const BlogItem = (props) => {
           </Card.Body>
         </Link>
         <Card.Footer>
+          {/* AL COMPONENTE BLOG AUTHOR PASSO L'EMAIL */}
           <BlogAuthor author={author} />
         </Card.Footer>
       </Card>

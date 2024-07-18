@@ -10,7 +10,7 @@ function AccountDropdown() {
   const { userLogged, setUserLogged } = useContext(LoggedUserDataContext)
   const { isLoggedIn, setIsLoggedIn } = useContext(LoggedInContext)
 
-  //HOOK PER LA NAIGAZIONE
+  //HOOK PER LA NAVIGAZIONE
   const navigate = useNavigate();
 
   //CREO UNA FUNZIONE PER GESTIRMI IL LOGOUT
@@ -23,11 +23,13 @@ function AccountDropdown() {
   //CREO UNO STATO PER POTERMI GESTIRE I DATI DELL'UTENTE CHE HA FATTO L'ACCESSO PER RENDERE LA NAVBAR PIÙ DINAMICA
   const [user, setUser] = useState(userLogged)
 
+  //USE EFFECT CHE MI CAMBIA I DATI DELL'UTENTE NELLA  NAVBAR QUANDO I DATI DELL'UTENTE LOGGATO CAMBIA
   useEffect(() => {
     setUser(userLogged)
   },[userLogged])
 
   return(
+    //SE L'UTENTE HA UN AVATAR, QUESTO SI CARICA ALTRIMENTI ESCE UN'ICONA
     <NavDropdown
       title={user.avatar ?
         <Image 
@@ -44,9 +46,12 @@ function AccountDropdown() {
       }
       align="end"
     >
+      {/* AL CLICK REINDERIZZA ALLA PAGINA DELL'AUTORE */}
       <NavDropdown.Item onClick={() => {navigate(`/author/${user._id}`)}}>{user.nome + ' '+ user.cognome}</NavDropdown.Item>
+      {/* AL CLICK TI PORTE ALLA PAGINA DEI DETTAGLI DELL'AUTORE LOGGATO PASSANDOGLI COME PARAMETRO L'ID  */}
       <NavDropdown.Item onClick={() => {navigate(`/authorDetails/${user._id}`)}}>Modifica dati</NavDropdown.Item>
       <NavDropdown.Divider />
+      {/* AL CLICK EFFETTUA IL LOGOUT DALLA PAGINA */}
       <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
     </NavDropdown> 
   )

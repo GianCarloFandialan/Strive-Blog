@@ -14,16 +14,13 @@ function ModifyPostbutton( { id } ) {
 
   //FUNZIONI CHE MI SERVONO PER CHIUDERE ED APRIRE IL MODALE
   const handleClose = () => setShow(false);
-  const handleShow = () => {
-    setShow(true)
-
-  }; 
+  const handleShow = () => setShow(true); 
 
   //USO IL CONTEXT
   const { posts, setPosts } = useContext(PostsContext)
   const { currentPage, setCurrentPage } = useContext(CurrentPageContext)
 
-  //HOOK PER LA NAIGAZIONE
+  //HOOK PER LA NAVIGAZIONE
   const navigate = useNavigate();
 
   //FUNZIONE IN CUI MI SALVERO I DETTAGLI DEL POST
@@ -32,11 +29,7 @@ function ModifyPostbutton( { id } ) {
   //CREO LA FUNZIONE PER GESTIRE LE MODIFICHE AL POST
   const [modifiedPost, setModifiedPost] = useState({})
 
-  useEffect(() => {
-    getPostDetails(id);
-  },[])
-
-  //FUNZIONE PER OTTENERE I DETTAGLI DEL POST
+  //FUNZIONE PER OTTENERE I DETTAGLI DEL POST TRAMITE LA FUNZIONE CREATA SU AXIOS
   const getPostDetails = async (id) => {
     try {
       const response = await getSinglePost(id);
@@ -46,6 +39,12 @@ function ModifyPostbutton( { id } ) {
       alert("Errore nella fetch dei dettagli del post:")
     }
   }
+
+  //AL CARICAMENTO DEL COMPONENTE ESEGUO LA FUNZIONE QUI SOPRA
+  useEffect(() => {
+    getPostDetails(id);
+  },[])
+
 
   //FUNZIONE PER GESTIRE I CAMBAIMANETI DEGLI INPUT NEL FORM E INTEGRARLI NELLO STATO
   function handleChange(e) {
@@ -62,7 +61,7 @@ function ModifyPostbutton( { id } ) {
     }
   }
 
-  //CREO UNA FUNZIONE PER GESTIRE IL SUBMIT DEL FORM
+  //CREO UNA FUNZIONE PER GESTIRE IL SUBMIT DEL FORM IN CUI ESEGUO L'UPDATE DEL POST TRAMITE LA FUNZIONE CREATA SU AXIOS
   const handleSubmit = async (e) => {
     e.preventDefault();
 

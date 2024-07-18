@@ -12,6 +12,8 @@ import ModifyPostImageButton from "../../components/blog/blog-modifybutton/Modif
 import { getSinglePost } from "../../data/apiAxios";
 
 function Blog() {
+
+  //CREO UNO STATO PER POTERMI GESTIRE I DATI DEL POST
   const [blog, setBlog] = useState({});
 
   //CREO UNO STATO PER GESTIRE LO SPINNER NEL FRATTEMPO CHE LA PAGINA SI DEVE CARICARE
@@ -29,13 +31,12 @@ function Blog() {
   //USO IL CONTEXT
   const { userLogged, setUserLogged } = useContext(LoggedUserDataContext)
 
-  //FUNZIONE PER OTTENERE I DATI DEL SINGOLO POST
+  //FUNZIONE PER OTTENERE I DATI DEL SINGOLO POST CON LA FUNZIONE CREATA CON AXIOS
   const getPost = async (postID) => {
     try {
       setLoading(true)
       const response = await getSinglePost(postID);
       setBlog(response.data)
-      console.log(response.data);
       setLoading(false)
     } catch (error) {
       console.error("Errore nella fetch dei dati del singolo post:", error)
@@ -53,6 +54,7 @@ function Blog() {
   // CREO UNO STATO PER PER POTERMI GESITRE l'APPARIRE O NO DEL BOTTONE DI MODIIFICA DELL'AVATAR ALL'HOVER SULL'IMMAGINE
   const [ isModifyAvatar,  setIsModifyAvatar] = useState(false)
 
+  // SE IL CONTENUTO DELLA PAGINA SI STA ANCORA CARICANDO, CARICO LO SPINNER ALTRIMENTI IL CONTENUTO DELLA PAGINA
   if (loading) {
     return (
       <Container fluid className="d-flex justify-content-center align-items-center" style={{minHeight: "50vh"}}>
@@ -64,12 +66,13 @@ function Blog() {
     return (
       <div className="blog-details-root">
         <Container className="">
+          {/* QUANDO FACCIO "L'HOVER" SULL'IMMAGINE DI COVER FACCIO APPARIRE I BOTTONI PER MODIFICARE IL POST OPPURE CANCELLARLO DEFINITVAMENTE */}
           <Container 
             className="position-relative prova p-0"
             onMouseOver={() => setIsModifyAvatar(true)}
             onMouseOut={() => setIsModifyAvatar(false)}>
-
-            <Image className="blog-details-cover" src={blog.cover} fluid />            
+            <Image className="blog-details-cover" src={blog.cover} fluid />
+            {/*  LE MODIFICHE O LA CANCELLAZIONE LA PUOI FARE SOLO SE SEI L'AUTORE DEL POST */}
             {userLogged.email == blog.author && isModifyAvatar && <ModifyPostImageButton postId={blog._id}/>}
             <div className="position-absolute bottom-0 end-0 bg-dark p-2">
               {userLogged.email == blog.author && isModifyAvatar && <ModifyPostbutton id={blog._id}/>}
@@ -101,8 +104,8 @@ function Blog() {
             {blog.content}
           </div>
 
+          {/* INSERISCO LA SEZIONE DEI COMMENTI */}
           <div>
-            
             <CommentsSection postId={blog._id}/>
           </div>
         </Container>

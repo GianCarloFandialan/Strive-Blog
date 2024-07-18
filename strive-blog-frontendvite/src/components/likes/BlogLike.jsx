@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { Button } from "react-bootstrap";
 const yourUserId = "123";
+
 export default function BlogLike({ defaultLikes, onChange }) {
   const [likes, setLikes] = useState(defaultLikes);
   const iLikedThisArticle = likes.includes(yourUserId);

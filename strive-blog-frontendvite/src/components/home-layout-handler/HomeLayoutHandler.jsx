@@ -4,7 +4,7 @@ import { CurrentPageContext } from "../../data/Context"
 
 function HomeLayoutHandler( { totalPages } ) {
 
-  //USO IL CONTEXT
+  //USO IL CONTEXT 
   const { currentPage, setCurrentPage } = useContext(CurrentPageContext)
 
   return(

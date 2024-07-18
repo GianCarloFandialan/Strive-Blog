@@ -6,67 +6,67 @@ import { CurrentPageContext } from "../../data/Context";
 
 function Login() { 
   
-    //HOOK PER LA NAIGAZIONE
-    const navigate = useNavigate();
-  
-    //CREO UNO STATO PER POTERMI GESTIRE LE CREDENZIALI
-    const [credentials, setCredentials] = useState({
-      email: "",
-      password: ""
-    })
-  
-    //FUNZIONE PER GESTIRE I CAMBAIMANETI DEGLI INPUT NEL FORM E INTEGRARLI NELLO STATO
-    function handleChange(e) {
-      const { name, value } = e.target;
-      setCredentials({ ...credentials, [name]: value })
+  //HOOK PER LA NAVIGAZIONE
+  const navigate = useNavigate();
+
+  //CREO UNO STATO PER POTERMI GESTIRE LE CREDENZIALI
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: ""
+  })
+
+  //FUNZIONE PER GESTIRE I CAMBAIMANETI DEGLI INPUT NEL FORM E INTEGRARLI NELLO STATO
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setCredentials({ ...credentials, [name]: value })
+  }
+
+  //USO IL CONTEXT
+  const { currentPage, setCurrentPage } = useContext(CurrentPageContext)
+
+  //CREO UNA FUNZIONE PER GESTIRE IL SUBMIT DEL FORM IN CUI ESEGUO LA FUNZIONE CREATA CON AXIOS
+  const handleSubmit = async (e) => {
+
+    e.preventDefault(); 
+
+    try {
+      const response = await loginUser(credentials);  
+      localStorage.setItem("token", response.token); // MEMORIZZA IL TOKEN DI AUTENTICAZIONE NEL LOCALSTORAGE
+      
+      // TRIGGER L'EVENTO STORAGE PER AGGIORNARE LA NAVBAR
+      window.dispatchEvent(new Event("storage")); // SCATENA UN EVENTO DI STORAGE PER AGGIORNARE COMPONENTI COME LA NAVBAR
+      alert("Login effettuato con successo!"); // Mostra un messaggio di successo
+      setCurrentPage(1)
+      navigate("/");
+    } catch (error) {
+      console.error("Errore durante il login:", error); // Logga l'errore in console
+      alert("Credenziali non valide. Riprova."); // Mostra un messaggio di errore
     }
-  
-    //USO IL CONTEXT
-    const { currentPage, setCurrentPage } = useContext(CurrentPageContext)
-  
-    //CREO UNA FUNZIONE PER GESTIRE IL SUBMIT DEL FORM
-    const handleSubmit = async (e) => {
-  
-      e.preventDefault(); 
-  
-      try {
-        const response = await loginUser(credentials);  
-        localStorage.setItem("token", response.token); // MEMORIZZA IL TOKEN DI AUTENTICAZIONE NEL LOCALSTORAGE
-        
-        // TRIGGER L'EVENTO STORAGE PER AGGIORNARE LA NAVBAR
-        window.dispatchEvent(new Event("storage")); // SCATENA UN EVENTO DI STORAGE PER AGGIORNARE COMPONENTI COME LA NAVBAR
-        alert("Login effettuato con successo!"); // Mostra un messaggio di successo
-        setCurrentPage(1)
-        navigate("/");
-      } catch (error) {
-        console.error("Errore durante il login:", error); // Logga l'errore in console
-        alert("Credenziali non valide. Riprova."); // Mostra un messaggio di errore
-      }
-    };
+  };
 
-    // HOOK PER ACCEDERE AI PARAMETRI DELL'URL CORRENTE
-    const location = useLocation();
+  // HOOK PER ACCEDERE AI PARAMETRI DELL'URL CORRENTE
+  const location = useLocation();
 
-    // USE EFFECT
-    useEffect(() => {
+  // USE EFFECT
+  useEffect(() => {
 
-      const params = new URLSearchParams(location.search);
+    const params = new URLSearchParams(location.search);
 
-      const token = params.get("token");
+    const token = params.get("token");
 
-      if (token) {
-        localStorage.setItem("token", token);
-        window.dispatchEvent(new Event("storage"));
-        navigate("/");
-      }
+    if (token) {
+      localStorage.setItem("token", token);
+      window.dispatchEvent(new Event("storage"));
+      navigate("/");
+    }
 
-    }, [location, navigate])
+  }, [location, navigate])
 
-    //FUNZIONE PER GESTIRE IL LOGIN TRAMITE GOOGLE
-    const handleGoogleLogin = () => {
-      // REINDIRIZZIAMO L'UTENTE ALL'ENDPOINT DEL BACKEND CHE INIZIA IL PROCESSO DI AUTENTICAZIONE GOOGLE
-      window.location.href = "http://localhost:5001/auth/google";
-    };
+  //FUNZIONE PER GESTIRE IL LOGIN TRAMITE GOOGLE
+  const handleGoogleLogin = () => {
+    // REINDIRIZZIAMO L'UTENTE ALL'ENDPOINT DEL BACKEND CHE INIZIA IL PROCESSO DI AUTENTICAZIONE GOOGLE
+    window.location.href = "http://localhost:5001/auth/google";
+  };
 
   return (
     <Container className="new-blog-container justify-content-center w-50" style={{minWidth:"400px"}}>
