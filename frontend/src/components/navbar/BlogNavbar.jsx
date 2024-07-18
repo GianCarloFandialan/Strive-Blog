@@ -35,11 +35,21 @@ const NavBar = props => {
   //USE EFFECT CHE AVVIENE ALL'ACCESSO O LOGOUT DELL'UTENTE 
   useEffect(() => {
 
-    const checkLoginStatus = () => {
+    const checkLoginStatus = async () => {
       const token = localStorage.getItem("token");
-      setIsLoggedIn(!!token);
+      if (token) {
+        try {
+          await getUserData();
+          setIsLoggedIn(true);
+        } catch (error) {
+          console.error("Token non valido:", error);
+          localStorage.removeItem("token");
+          setIsLoggedIn(false);
+        }
+      } else {
+        setIsLoggedIn(false);
+      }
     };
-
 
     checkLoginStatus();
 
@@ -52,10 +62,13 @@ const NavBar = props => {
 
     //EVENT LISTENER PER CONTROLLARE LO STATO DI LOGIN
     window.addEventListener("storage", checkLoginStatus);
+    // EVENTO PER IL CAMBIO DI STATO
+    window.addEventListener("loginStateChange", checkLoginStatus);
 
     //RIMUOVO L'EVENT LISTENER QUANDO IL COMPONENTE VIENE SMONTATO
     return () => {
       window.removeEventListener("storage", checkLoginStatus);
+      window.removeEventListener("loginStateChange", checkLoginStatus);
     };
 
 

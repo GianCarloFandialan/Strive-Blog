@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { loginUser } from "../../data/apiAxios";
 import { CurrentPageContext } from "../../data/Context";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
+
 function Login() {
 
   //STATO PER GESTIRE L'APERTURA E LA CHIUSURA DEL MODALE
@@ -79,12 +81,12 @@ function Login() {
   //FUNZIONE PER GESTIRE IL LOGIN TRAMITE GOOGLE
   const handleGoogleLogin = () => {
     // REINDIRIZZIAMO L'UTENTE ALL'ENDPOINT DEL BACKEND CHE INIZIA IL PROCESSO DI AUTENTICAZIONE GOOGLE
-    window.location.href = "http://localhost:5001/auth/google";
+    window.location.href = `${API_URL}/auth/google`;
   };
 
   //FUNZIONE PER GESTIRE IL LOGIN TRAMITE GITHUB
   const handleGitHubLogin = () => {
-    window.location.href = "http://localhost:5001/auth/github";
+    window.location.href = `${API_URL}/auth/github`;
   };
 
   return (
