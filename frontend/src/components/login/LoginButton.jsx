@@ -73,6 +73,7 @@ function Login() {
     if (token) {
       localStorage.setItem("token", token);
       window.dispatchEvent(new Event("storage"));
+      window.dispatchEvent(new Event("loginStateChange"));
       navigate("/");
     }
 

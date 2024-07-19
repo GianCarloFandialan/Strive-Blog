@@ -7,6 +7,8 @@ import { CurrentPageContext } from "../../data/Context";
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001";
 
 function Login() { 
+
+  console.log(API_URL);
   
   //HOOK PER LA NAVIGAZIONE
   const navigate = useNavigate();
@@ -59,6 +61,7 @@ function Login() {
     if (token) {
       localStorage.setItem("token", token);
       window.dispatchEvent(new Event("storage"));
+      window.dispatchEvent(new Event("loginStateChange"));
       navigate("/");
     }
 
