@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Container, Navbar, NavDropdown  } from "react-bootstrap";
+import React, { useContext, useEffect } from "react";
+import { Container, Navbar  } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import "./styles.css";
@@ -10,7 +10,7 @@ import { getUserData } from "../../data/apiAxios";
 import AccountDropdown from "./navbar-components/AccountDropdown";
 
 
-const NavBar = props => {
+const NavBar = () => {
 
   //USO IL CONTEXT
   const { currentPage, setCurrentPage } = useContext(CurrentPageContext)
@@ -39,7 +39,7 @@ const NavBar = props => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          await getUserData();
+          fetchUser()
           setIsLoggedIn(true);
         } catch (error) {
           console.error("Token non valido:", error);
