@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = "https://strive-blog-p5r2.onrender.com"
+const API_URL = "https://strive-blog-p5r2.onrender.com/"
 
 const api = axios.create({ baseURL: API_URL});
 
