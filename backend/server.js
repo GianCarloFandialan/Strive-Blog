@@ -39,7 +39,7 @@ const corsOptions = {
       // IN PRODUZIONE, CONTROLLIAMO SE L'ORIGINE È NELLA WHITELIST
       callback(null, true);
     } else {
-      callback(new Error('PERMESSO NEGATO - CORS'));
+      callback(new Error('GENERIC CORS ERROR - CORS (backend)'));
     }
   },
   credentials: true // PERMETTE L'INVIO DI CREDENZIALI, COME NEL CASO DI AUTENTICAZIONE

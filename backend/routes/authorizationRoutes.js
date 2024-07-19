@@ -75,11 +75,11 @@ router.get(
 
       // REINDIRIZZA L'UTENTE AL FRONTEND, PASSANDO IL TOKEN COME PARAMETRO URL
       // IL FRONTEND PUÒ QUINDI SALVARE QUESTO TOKEN E USARLO PER LE RICHIESTE AUTENTICATE
-      res.redirect(`http://localhost:5173/login?token=${token}`);
+      res.redirect(`${FRONTEND_URL}login?token=${token}`);
     } catch (error) {
       console.error("Errore nella generazione del token:", error);
       // REINDIRIZZIAMO L'UTENTE ALLA PAGINA DI LOGIN CON UN MESSAGGIO DI ERRORE
-      res.redirect(`/login?error=auth_failed`);
+      res.redirect(`${FRONTEND_URL}/login?error=auth_failed`);
     }
   }
 );
