@@ -1,6 +1,7 @@
 # STRIVE BLOG
 **Questo progetto è stato deployato al link:**
 **https://strive-blog-seven.vercel.app/**
+
 Questo progetto rappresenta un blog con varie funzionalità inserite, 
 
  - La possibilità di fare l'accesso sia tramite registrazine normale sia tramite google oppure github
